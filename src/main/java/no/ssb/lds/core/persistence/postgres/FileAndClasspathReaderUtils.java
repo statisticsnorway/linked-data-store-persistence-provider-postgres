@@ -1,6 +1,7 @@
 package no.ssb.lds.core.persistence.postgres;
 
 import java.io.InputStream;
+import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -24,12 +25,19 @@ public class FileAndClasspathReaderUtils {
         } else {
             utf8Str = getResourceAsString(path, StandardCharsets.UTF_8);
         }
+        if (utf8Str == null) {
+            throw new IllegalArgumentException("Resource not found: " + path);
+        }
         return utf8Str;
     }
 
     public static String getResourceAsString(String path, Charset charset) {
         try {
-            URLConnection conn = ClassLoader.getSystemResource(path).openConnection();
+            URL systemResource = ClassLoader.getSystemResource(path);
+            if (systemResource == null) {
+                return null;
+            }
+            URLConnection conn = systemResource.openConnection();
             try (InputStream is = conn.getInputStream()) {
                 byte[] bytes = is.readAllBytes();
                 CharBuffer cbuf = CharBuffer.allocate(bytes.length);
