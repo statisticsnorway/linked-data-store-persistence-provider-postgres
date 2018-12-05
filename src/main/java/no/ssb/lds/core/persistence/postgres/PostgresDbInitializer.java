@@ -50,7 +50,7 @@ public class PostgresDbInitializer implements PersistenceInitializer {
     public Persistence initialize(String defaultNamespace, Map<String, String> configuration, Set<String> managedDomains) {
         JavaUtilLoggingInitializer.initialize();
         HikariDataSource dataSource = openDataSource(configuration);
-        return new PostgresPersistence(new PostgresPersistenceProvider(dataSource));
+        return new PostgresPersistence(new PostgresTransactionFactory(dataSource));
     }
 
     public static HikariDataSource openDataSource(Map<String, String> configuration) {
