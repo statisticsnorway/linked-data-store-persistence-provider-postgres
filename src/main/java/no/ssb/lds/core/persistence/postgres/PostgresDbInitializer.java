@@ -4,7 +4,9 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import no.ssb.lds.api.persistence.PersistenceInitializer;
 import no.ssb.lds.api.persistence.ProviderName;
-import no.ssb.lds.api.persistence.streaming.Persistence;
+import no.ssb.lds.api.persistence.flattened.DefaultFlattenedPersistence;
+import no.ssb.lds.api.persistence.json.BufferedJsonPersistence;
+import no.ssb.lds.api.persistence.json.JsonPersistence;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -47,10 +49,13 @@ public class PostgresDbInitializer implements PersistenceInitializer {
     }
 
     @Override
-    public Persistence initialize(String defaultNamespace, Map<String, String> configuration, Set<String> managedDomains) {
+    public JsonPersistence initialize(String defaultNamespace, Map<String, String> configuration, Set<String> managedDomains) {
+        int fragmentCapacityBytes = Integer.MAX_VALUE; // Postgres persistence-provider does not support fragmentation of document leaf-nodes.
         JavaUtilLoggingInitializer.initialize();
         HikariDataSource dataSource = openDataSource(configuration);
-        return new PostgresPersistence(new PostgresTransactionFactory(dataSource));
+        PostgresPersistence postgresPersistence = new PostgresPersistence(new PostgresTransactionFactory(dataSource));
+        DefaultFlattenedPersistence flattenedPersistence = new DefaultFlattenedPersistence(postgresPersistence, fragmentCapacityBytes);
+        return new BufferedJsonPersistence(flattenedPersistence, fragmentCapacityBytes);
     }
 
     public static HikariDataSource openDataSource(Map<String, String> configuration) {
