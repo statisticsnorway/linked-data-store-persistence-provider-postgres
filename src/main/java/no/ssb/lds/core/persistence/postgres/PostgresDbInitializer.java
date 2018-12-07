@@ -2,9 +2,9 @@ package no.ssb.lds.core.persistence.postgres;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import no.ssb.lds.api.persistence.Persistence;
 import no.ssb.lds.api.persistence.PersistenceInitializer;
 import no.ssb.lds.api.persistence.ProviderName;
+import no.ssb.lds.api.persistence.streaming.Persistence;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
