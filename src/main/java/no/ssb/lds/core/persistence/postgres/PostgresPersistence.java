@@ -130,7 +130,7 @@ class PostgresPersistence implements Persistence {
                     try {
                         Timestamp snapshotVersion = new Timestamp(snapshot.toInstant().toEpochMilli());
                         PreparedStatement ps = tx.connection.prepareStatement("SELECT version, path, indices, type, value FROM namespace " +
-                                "WHERE entity = ? AND id = ? AND version = (SELECT max(version) FROM namespace WHERE entity = ? AND id = ? AND version <= ? LIMIT 1)");
+                                "WHERE entity = ? AND id = ? AND version = (SELECT max(version) FROM namespace WHERE entity = ? AND id = ? AND version <= ?)");
                         ps.setString(1, entity);
                         ps.setString(2, id);
                         ps.setString(3, entity);
