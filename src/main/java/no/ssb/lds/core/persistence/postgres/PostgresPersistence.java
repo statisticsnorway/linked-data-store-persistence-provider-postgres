@@ -185,7 +185,7 @@ class PostgresPersistence implements Persistence {
     }
 
     @Override
-    public Flow.Publisher<Fragment> readVersions(Transaction transaction, ZonedDateTime snapshotFrom, ZonedDateTime snapshotTo, String namespace, String entity, String id, String firstId, int limit) throws PersistenceException {
+    public Flow.Publisher<Fragment> readVersions(Transaction transaction, ZonedDateTime snapshotFrom, ZonedDateTime snapshotTo, String namespace, String entity, String id, ZonedDateTime firstVersion, int limit) throws PersistenceException {
         return subscriber -> subscriber.onSubscribe(new Flow.Subscription() {
             final AtomicLong budget = new AtomicLong(0);
             final AtomicBoolean first = new AtomicBoolean(true);
