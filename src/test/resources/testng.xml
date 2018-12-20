@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="tests">
+
+    <test name="default" enabled="false">
+        <classes>
+            <class name="no.ssb.lds.core.persistence.postgres.PostgresIntegrationTest" />
+
+        </classes>
+    </test>
+
+</suite>
