@@ -8,8 +8,6 @@ module no.ssb.lds.persistence.postgres {
     requires postgresql;
     requires java.logging;
     requires jul_to_slf4j;
-    requires no.ssb.lds.persistence.foundationdb;
-    requires fdb.java;
 
     provides PersistenceInitializer with PostgresDbInitializer;
 }
