@@ -9,5 +9,7 @@ module no.ssb.lds.persistence.postgres {
     requires java.logging;
     requires jul_to_slf4j;
 
+    opens postgres;
+
     provides PersistenceInitializer with PostgresDbInitializer;
 }
