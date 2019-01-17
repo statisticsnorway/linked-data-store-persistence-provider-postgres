@@ -197,7 +197,7 @@
                 <version>2.19.1</version> <!-- Newer version do not yet work with Java 11 -->
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <!--<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
