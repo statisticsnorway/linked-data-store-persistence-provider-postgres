@@ -129,8 +129,11 @@ class PostgresPersistence implements Persistence {
                     // first request
                     try {
                         Timestamp snapshotVersion = new Timestamp(snapshot.toInstant().toEpochMilli());
-                        PreparedStatement ps = tx.connection.prepareStatement("SELECT version, path, indices, type, value FROM namespace " +
-                                "WHERE entity = ? AND id = ? AND version = (SELECT max(version) FROM namespace WHERE entity = ? AND id = ? AND version <= ?)");
+                        PreparedStatement ps = tx.connection.prepareStatement("" +
+                                "SELECT version, path, indices, type, value " +
+                                "FROM namespace " +
+                                "WHERE entity = ? AND id = ? AND version = (SELECT max(version) FROM namespace WHERE entity = ? AND id = ? AND version <= ?) " +
+                                "ORDER BY version, path, indices, type");
                         ps.setString(1, entity);
                         ps.setString(2, id);
                         ps.setString(3, entity);
@@ -412,9 +415,13 @@ class PostgresPersistence implements Persistence {
                 if (first.compareAndSet(true, false)) {
                     // first request
                     try {
-                        PreparedStatement ps = tx.connection.prepareStatement("SELECT n.id, n.version, n.path, n.indices, n.type, n.value FROM namespace n " +
-                                "JOIN (SELECT id, max(version) ver FROM namespace WHERE entity = ? AND version <= ? GROUP BY id ORDER BY id LIMIT ?) a ON (n.id = a.id AND n.version = a.ver) " +
-                                "WHERE entity = ?");
+                        PreparedStatement ps = tx.connection.prepareStatement("" +
+                                "SELECT n.id, n.version, n.path, n.indices, n.type, n.value " +
+                                "FROM namespace n " +
+                                "JOIN (SELECT id, max(version) ver FROM namespace WHERE entity = ? AND version <= ? GROUP BY id ORDER BY id LIMIT ?) a " +
+                                "ON (n.id = a.id AND n.version = a.ver) " +
+                                "WHERE entity = ? " +
+                                "ORDER BY n.id, n.version, n.path, n.indices, n.type");
                         ps.setString(1, entity);
                         Timestamp snapshotTime = new Timestamp(snapshot.toInstant().toEpochMilli());
                         ps.setTimestamp(2, snapshotTime);
