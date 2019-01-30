@@ -8,8 +8,6 @@ import no.ssb.lds.api.persistence.TransactionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinTask;
 import java.util.function.Function;
 
 public class PostgresTransactionFactory implements TransactionFactory {
@@ -21,13 +19,8 @@ public class PostgresTransactionFactory implements TransactionFactory {
     }
 
     @Override
-    public <T> CompletableFuture<T> runAsyncInIsolatedTransaction(Function<? super Transaction, ? extends CompletableFuture<T>> retryable) {
-        ForkJoinTask<? extends CompletableFuture<T>> task = ForkJoinPool.commonPool().submit(() -> {
-            try (PostgresTransaction tx = createTransaction(false)) {
-                return retryable.apply(tx);
-            }
-        });
-        return task.join();
+    public <T> CompletableFuture<T> runAsyncInIsolatedTransaction(Function<? super Transaction, ? extends T> retryable, boolean readOnly) {
+        throw new UnsupportedOperationException("TODO");
     }
 
     @Override
