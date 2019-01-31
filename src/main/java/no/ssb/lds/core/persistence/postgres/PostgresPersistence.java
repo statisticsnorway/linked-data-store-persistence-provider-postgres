@@ -31,7 +31,7 @@ import static java.util.Optional.ofNullable;
 
 class PostgresPersistence implements RxPersistence {
 
-    private static final ZonedDateTime BEGINNING_OF_TIME = ZonedDateTime.of(1900, 1, 1, 0, 0, 0, 0, ZoneId.of("Etc/UTC"));
+    private static final ZonedDateTime BEGINNING_OF_TIME = ZonedDateTime.of(1, 1, 1, 0, 0, 0, 0, ZoneId.of("Etc/UTC"));
     private static final ZonedDateTime END_OF_TIME = ZonedDateTime.of(9999, 1, 1, 0, 0, 0, 0, ZoneId.of("Etc/UTC"));
 
     final PostgresTransactionFactory transactionFactory;
