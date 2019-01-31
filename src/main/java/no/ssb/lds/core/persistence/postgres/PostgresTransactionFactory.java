@@ -19,8 +19,8 @@ public class PostgresTransactionFactory implements TransactionFactory {
     }
 
     @Override
-    public <T> CompletableFuture<T> runAsyncInIsolatedTransaction(Function<? super Transaction, ? extends CompletableFuture<T>> retryable) {
-        return CompletableFuture.supplyAsync(() -> retryable.apply(createTransaction(false)).join());
+    public <T> CompletableFuture<T> runAsyncInIsolatedTransaction(Function<? super Transaction, ? extends T> retryable, boolean readOnly) {
+        return CompletableFuture.supplyAsync(() -> retryable.apply(createTransaction(readOnly)));
     }
 
     @Override

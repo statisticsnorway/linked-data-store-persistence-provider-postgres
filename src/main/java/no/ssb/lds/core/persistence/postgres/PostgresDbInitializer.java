@@ -4,9 +4,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import no.ssb.lds.api.persistence.PersistenceInitializer;
 import no.ssb.lds.api.persistence.ProviderName;
-import no.ssb.lds.api.persistence.flattened.DefaultFlattenedPersistence;
-import no.ssb.lds.api.persistence.json.BufferedJsonPersistence;
-import no.ssb.lds.api.persistence.json.JsonPersistence;
+import no.ssb.lds.api.persistence.reactivex.RxJsonPersistence;
+import no.ssb.lds.api.persistence.reactivex.RxJsonPersistenceBridge;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -30,6 +29,7 @@ public class PostgresDbInitializer implements PersistenceInitializer {
 
         static void initialize() {
         }
+
     }
 
     @Override
@@ -48,14 +48,19 @@ public class PostgresDbInitializer implements PersistenceInitializer {
         );
     }
 
+    private PostgresPersistence postgresPersistence;
+
+    public PostgresPersistence getPostgresPersistence() {
+        return postgresPersistence;
+    }
+
     @Override
-    public JsonPersistence initialize(String defaultNamespace, Map<String, String> configuration, Set<String> managedDomains) {
+    public RxJsonPersistence initialize(String defaultNamespace, Map<String, String> configuration, Set<String> managedDomains) {
         int fragmentCapacityBytes = Integer.MAX_VALUE; // Postgres persistence-provider does not support fragmentation of document leaf-nodes.
         JavaUtilLoggingInitializer.initialize();
         HikariDataSource dataSource = openDataSource(configuration);
-        PostgresPersistence postgresPersistence = new PostgresPersistence(new PostgresTransactionFactory(dataSource));
-        DefaultFlattenedPersistence flattenedPersistence = new DefaultFlattenedPersistence(postgresPersistence, fragmentCapacityBytes);
-        return new BufferedJsonPersistence(flattenedPersistence, fragmentCapacityBytes);
+        postgresPersistence = new PostgresPersistence(new PostgresTransactionFactory(dataSource));
+        return new RxJsonPersistenceBridge(postgresPersistence, fragmentCapacityBytes);
     }
 
     public static HikariDataSource openDataSource(Map<String, String> configuration) {

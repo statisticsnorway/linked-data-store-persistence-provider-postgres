@@ -8,6 +8,8 @@ module no.ssb.lds.persistence.postgres {
     requires postgresql;
     requires java.logging;
     requires jul_to_slf4j;
+    requires io.reactivex.rxjava2;
+    requires org.reactivestreams;
 
     opens postgres;
 
