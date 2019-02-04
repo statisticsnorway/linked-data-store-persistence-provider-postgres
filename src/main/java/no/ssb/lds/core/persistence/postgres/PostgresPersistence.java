@@ -241,6 +241,17 @@ class PostgresPersistence implements RxPersistence {
     }
 
     @Override
+    public Completable deleteAllEntities(Transaction transaction, String namespace, String entity, Iterable<String> paths) {
+        return Completable.fromCallable(() -> {
+            PostgresTransaction tx = (PostgresTransaction) transaction;
+            PreparedStatement ps = tx.connection.prepareStatement("DELETE FROM namespace WHERE entity = ?");
+            ps.setString(1, entity);
+            ps.executeUpdate();
+            return null;
+        });
+    }
+
+    @Override
     public Completable markDeleted(Transaction transaction, String namespace, String entity, String id, ZonedDateTime timestamp, PersistenceDeletePolicy policy) {
         return Completable.fromCallable(() -> {
             PostgresTransaction tx = (PostgresTransaction) transaction;
