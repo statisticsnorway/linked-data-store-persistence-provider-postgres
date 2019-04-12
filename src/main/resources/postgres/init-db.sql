@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS namespace;
 
 CREATE TABLE namespace
 (
-  entity  varchar                     NOT NULL,
-  id      varchar                     NOT NULL,
+  entity  varchar COLLATE "POSIX"     NOT NULL,
+  id      varchar COLLATE "POSIX"     NOT NULL,
   version timestamp(3) with time zone NOT NULL,
   path    varchar                     NOT NULL,
   indices integer[]                   NOT NULL,
