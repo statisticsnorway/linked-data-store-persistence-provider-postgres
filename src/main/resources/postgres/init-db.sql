@@ -1,6 +1,4 @@
-DROP TABLE IF EXISTS namespace;
-
-CREATE TABLE namespace
+CREATE TABLE IF NOT EXISTS namespace
 (
   entity  varchar COLLATE "POSIX"     NOT NULL,
   id      varchar COLLATE "POSIX"     NOT NULL,
@@ -12,4 +10,4 @@ CREATE TABLE namespace
   PRIMARY KEY (entity, id, version, path, indices)
 );
 
-CREATE INDEX namespace_path_value_idx ON namespace(entity, path, value);
+CREATE INDEX IF NOT EXISTS namespace_path_value_idx ON namespace(entity, path, value);
