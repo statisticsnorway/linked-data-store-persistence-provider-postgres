@@ -16,7 +16,7 @@
         <java.version>11</java.version>
         <module.build.sourceEncoding>UTF-8</module.build.sourceEncoding>
         <testng.version>6.14.3</testng.version>
-        <slf4j.version>1.8.0-beta2</slf4j.version>
+        <slf4j.version>1.8.0-beta4</slf4j.version>
     </properties>
 
     <licenses>
