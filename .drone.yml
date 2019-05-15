@@ -1,6 +1,14 @@
 kind: pipeline
 name: default
 
+services:
+- name: postgres
+  image: postgres:alpine
+  environment:
+    POSTGRES_USER: lsd
+    POSTGRES_DB: lds
+    POSTGRES_PASSWORD: lds
+
 steps:
 - name: build
   image: maven:3.6.1-jdk-11
