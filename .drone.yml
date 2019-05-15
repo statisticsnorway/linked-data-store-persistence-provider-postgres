@@ -8,6 +8,8 @@ services:
     POSTGRES_USER: lsd
     POSTGRES_DB: lds
     POSTGRES_PASSWORD: lds
+  ports:
+  - 5432
 
 steps:
 - name: build
