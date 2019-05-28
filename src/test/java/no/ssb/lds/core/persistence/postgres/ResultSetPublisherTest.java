@@ -27,7 +27,7 @@ public class ResultSetPublisherTest extends PublisherVerification<ResultSet> {
         initializer = new PostgresDbInitializer();
         initializer.initialize("ns",
                 Map.of(
-                        "postgres.driver.host", "localhost",
+                        "postgres.driver.host", "postgres",
                         "postgres.driver.port", "5432",
                         "postgres.driver.user", "lds",
                         "postgres.driver.password", "lds",
