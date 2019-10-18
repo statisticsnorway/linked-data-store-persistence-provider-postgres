@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 
-public class ResultSetPublisherTest extends PublisherVerification<ResultSet> {
+public class ResultSetPublisherIntegrationTest extends PublisherVerification<ResultSet> {
 
     public static final long DEFAULT_TIMEOUT_MILLIS = 100;
     public static final long DEFAULT_NO_SIGNALS_TIMEOUT_MILLIS = 100;
@@ -22,7 +22,7 @@ public class ResultSetPublisherTest extends PublisherVerification<ResultSet> {
 
     PostgresTransaction tx;
 
-    public ResultSetPublisherTest() {
+    public ResultSetPublisherIntegrationTest() {
         super(new TestEnvironment(DEFAULT_TIMEOUT_MILLIS, DEFAULT_NO_SIGNALS_TIMEOUT_MILLIS), PUBLISHER_REFERENCE_CLEANUP_TIMEOUT_MILLIS);
         initializer = new PostgresDbInitializer();
         initializer.initialize("ns",
