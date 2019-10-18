@@ -15,8 +15,6 @@
     <properties>
         <java.version>11</java.version>
         <module.build.sourceEncoding>UTF-8</module.build.sourceEncoding>
-        <testng.version>6.14.3</testng.version>
-        <slf4j.version>1.8.0-beta2</slf4j.version>
     </properties>
 
     <licenses>
@@ -57,48 +55,52 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>no.ssb.lds</groupId>
+                <artifactId>linked-data-store-project</artifactId>
+                <version>0.1-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>no.ssb.lds</groupId>
             <artifactId>linked-data-store-persistence-provider-api</artifactId>
-            <version>0.14-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>3.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.reactivestreams</groupId>
             <artifactId>reactive-streams-tck</artifactId>
-            <version>1.0.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>no.ssb.lds</groupId>
             <artifactId>linked-data-store-persistence-provider-test</artifactId>
-            <version>0.4-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
