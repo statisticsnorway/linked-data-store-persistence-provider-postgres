@@ -1,6 +1,15 @@
 kind: pipeline
 name: default
 
+services:
+  - name: postgresdb
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    commands:
+      - cp init-db-and-user.sql /docker-entrypoint-initdb.d/
+      - /docker-entrypoint.sh postgres
+
 steps:
   - name: authenticate
     image: robertstettner/drone-mvn-auth
@@ -65,6 +74,18 @@ steps:
     depends_on:
       - test
 
+  - name: integration
+    image: maven:3-jdk-11
+    commands:
+      - mvn verify -P ssb-bip,integration --batch-mode --global-settings settings.xml
+    environment:
+      MAVEN_HOME: /drone/src/.m2
+      M2_HOME: /drone/src/.m2
+    depends_on:
+      - sonarqube
+  #      - codacy
+  #      - codecov
+
   - name: publish-maven
     image: maven:3-jdk-11
     commands:
@@ -73,9 +94,7 @@ steps:
       MAVEN_HOME: /drone/src/.m2
       M2_HOME: /drone/src/.m2
     depends_on:
-      - sonarqube
-  #      - codacy
-  #      - codecov
+      - integration
 
   - name: slack
     image: plugins/slack

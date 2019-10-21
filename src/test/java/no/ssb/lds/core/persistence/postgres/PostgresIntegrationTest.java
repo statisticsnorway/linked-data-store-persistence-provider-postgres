@@ -16,7 +16,7 @@ public class PostgresIntegrationTest extends PersistenceIntegrationTest {
     @BeforeClass
     public void setup() {
         persistence = new PostgresDbInitializer().initialize(namespace,
-                Map.of("postgres.driver.host", "localhost",
+                Map.of("postgres.driver.host", "postgresdb",
                         "postgres.driver.port", "5432",
                         "postgres.driver.user", "lds",
                         "postgres.driver.password", "lds",
