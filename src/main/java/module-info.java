@@ -5,7 +5,7 @@ module no.ssb.lds.persistence.postgres {
     requires no.ssb.lds.persistence.api;
     requires java.sql;
     requires com.zaxxer.hikari;
-    requires postgresql;
+    requires org.postgresql.jdbc;
     requires java.logging;
     requires jul_to_slf4j;
     requires io.reactivex.rxjava2;
