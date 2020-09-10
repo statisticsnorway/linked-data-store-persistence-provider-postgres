@@ -3,6 +3,7 @@ package no.ssb.lds.core.persistence.postgres;
 import no.ssb.lds.core.persistence.test.PersistenceIntegrationTest;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,11 @@ public class PostgresIntegrationTest extends PersistenceIntegrationTest {
                         "persistence.fragment.capacity", String.valueOf(Integer.MAX_VALUE)
                 ),
                 Set.of("Person", "Address", "FunkyLongAddress"));
+    }
+
+    @Test
+    void helloTest() {
+        System.out.println("hello");
     }
 
     @AfterClass
