@@ -6,6 +6,7 @@ import no.ssb.lds.api.persistence.PersistenceInitializer;
 import no.ssb.lds.api.persistence.ProviderName;
 import no.ssb.lds.api.persistence.reactivex.RxJsonPersistence;
 import no.ssb.lds.api.persistence.reactivex.RxJsonPersistenceBridge;
+import no.ssb.lds.api.specification.Specification;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -55,7 +56,7 @@ public class PostgresDbInitializer implements PersistenceInitializer {
     }
 
     @Override
-    public RxJsonPersistence initialize(String defaultNamespace, Map<String, String> configuration, Set<String> managedDomains) {
+    public RxJsonPersistence initialize(String defaultNamespace, Map<String, String> configuration, Set<String> managedDomains, Specification specification) {
         int fragmentCapacityBytes = Integer.MAX_VALUE; // Postgres persistence-provider does not support fragmentation of document leaf-nodes.
         JavaUtilLoggingInitializer.initialize();
         HikariDataSource dataSource = openDataSource(configuration);

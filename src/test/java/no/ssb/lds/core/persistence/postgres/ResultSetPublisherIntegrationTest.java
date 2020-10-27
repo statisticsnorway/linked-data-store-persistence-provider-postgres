@@ -33,7 +33,8 @@ public class ResultSetPublisherIntegrationTest extends PublisherVerification<Res
                         "postgres.driver.password", "lds",
                         "postgres.driver.database", "lds"
                 ),
-                Set.of("A")
+                Set.of("A"),
+                null
         );
         postgresPersistence = initializer.getPostgresPersistence();
     }

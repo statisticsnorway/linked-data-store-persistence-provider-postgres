@@ -23,7 +23,8 @@ public class PostgresIntegrationTest extends PersistenceIntegrationTest {
                         "postgres.driver.database", "lds",
                         "persistence.fragment.capacity", String.valueOf(Integer.MAX_VALUE)
                 ),
-                Set.of("Person", "Address", "FunkyLongAddress"));
+                Set.of("Person", "Address", "FunkyLongAddress"),
+                null);
     }
 
     @AfterClass
